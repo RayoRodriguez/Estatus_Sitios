@@ -16,7 +16,7 @@ public class ConnectSQL {
 
         try {
             Class.forName("net.sourceforge.jtds.jdbc.Driver");
-            ConnectionURL = "jdbc:jtds:sqlserver://192.168.66.85;database=db_SAO_CA_DEV;user=wcfsao;password=1ZSAO11X;";
+            ConnectionURL = "jdbc:jtds:sqlserver://192.168.66.85:1433;databaseName=db_SAO_DEV;user=wcfsao;password=1ZSAO11X;";
             connection = DriverManager.getConnection(ConnectionURL);
         } catch (SQLException se) {
             Log.e("ERROR", se.getMessage());

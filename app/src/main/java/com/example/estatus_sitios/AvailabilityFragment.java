@@ -1,8 +1,11 @@
 package com.example.estatus_sitios;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,17 +21,23 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 public class AvailabilityFragment extends Fragment
         implements OnMapReadyCallback {
 
     private GoogleMap ngoogleMap;
     private MapView mapView;
     private Bundle mBundle;
+    private Marker marcador;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_availability,null);
+        View view = inflater.inflate(R.layout.fragment_availability, null);
         return view;
     }
 
@@ -36,7 +45,7 @@ public class AvailabilityFragment extends Fragment
         super.onViewCreated(view, savedInstanceState);
         getActivity().setTitle(R.string.titleAvailability);
         mapView = view.findViewById(R.id.mapView);
-        if (mapView != null){
+        if (mapView != null) {
             mapView.onCreate(null);
             mapView.onResume();
             mapView.getMapAsync(this);
@@ -45,16 +54,52 @@ public class AvailabilityFragment extends Fragment
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        LatLng Mexico = new LatLng(23.3134142,-111.6559662);
         MapsInitializer.initialize(getContext());
         ngoogleMap = googleMap;
-        LatLng latlng = new LatLng(25.6575055, 100.2991894);
-        ngoogleMap.addMarker(new MarkerOptions().position(latlng).title("Grupo Pol"));
-        ngoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlng,5));
+        ObtenerDatos();
+        ngoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Mexico,5));
         ngoogleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
-                Toast.makeText(getActivity(), "Click sobre el marcador", Toast.LENGTH_SHORT).show();
+                marker.getPosition();
+                Toast.makeText(getActivity(),marker.getPosition().toString(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+
+    public boolean ObtenerDatos() {
+        double latitud, longitud;
+        String NumSitio="";
+        try {
+            //Se obtiene la conexión
+            Connection connect = ConnectSQL.ConnectionHelper();
+            //Se genera la consulta
+            Statement st = connect.createStatement();
+            ResultSet rs = st.executeQuery("select latitud,longitud,NumeroSitio  from sitio");
+            while (rs.next()) {
+                //Se extraen los datos
+                latitud = rs.getDouble("latitud");
+                longitud = rs.getDouble("longitud");
+                NumSitio= rs.getString("NumeroSitio");
+                LatLng coordenadas = new LatLng(latitud, longitud);
+                marcador = ngoogleMap.addMarker(new MarkerOptions()
+                .position(coordenadas)
+                .title(NumSitio));
+            }
+            //Se cierra la conexión
+            connect.close();
+            //Mostramos los datos obtenidos
+//            Toast.makeText(getActivity(),
+//                    +" -- "+, Toast.LENGTH_SHORT).show();
+            return  true;
+        } catch (SQLException e) {
+            //Mostramos el error en caso de no conectarse
+            Toast.makeText(getActivity(),
+                    e.getMessage(), Toast.LENGTH_SHORT).show();
+            return false;
+            //return latLng;
+        }
     }
 }

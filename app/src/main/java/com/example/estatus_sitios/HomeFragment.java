@@ -40,21 +40,23 @@ public class HomeFragment extends Fragment {
 
     public boolean ObtenerDatos() {
         String datosConsultado = "";
+        String datosConsultado2 = "";
         try {
             //Se obtiene la conexión
             Connection connect = ConnectSQL.ConnectionHelper();
             //Se genera la consulta
             Statement st = connect.createStatement();
-            ResultSet rs = st.executeQuery("select latitud from dbo.sitios");
+            ResultSet rs = st.executeQuery("select latitud,longitud from sitio where id='1'");
             while (rs.next()) {
                 //Se extraen los datos
                 datosConsultado = rs.getString("latitud");
+                datosConsultado2 = rs.getString("longitud");
             }
             //Se cierra la conexión
             connect.close();
             //Mostramos los datos obtenidos
             Toast.makeText(getActivity(),
-                    datosConsultado, Toast.LENGTH_SHORT).show();
+                    datosConsultado+" -- "+datosConsultado2, Toast.LENGTH_SHORT).show();
             return  true;
         } catch (SQLException e) {
             //Mostramos el error en caso de no conectarse
