@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Estatus_Sitios</string>
+    <string name="titleHome">Inicio</string>
+    <string name="titleAvailability">Disponibilidad</string>
+    <string name="titleProfitability">Rentabilidad</string>
+    <string name="titleSearch">Buscar</string>
+</resources>
