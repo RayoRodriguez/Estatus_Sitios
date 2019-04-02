@@ -28,7 +28,8 @@ public class HomeFragment extends Fragment {
 
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        btn = (Button) view.findViewById(R.id.button);
+        getActivity().setTitle(R.string.app_name);
+        btn = view.findViewById(R.id.button);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,7 +59,7 @@ public class HomeFragment extends Fragment {
         } catch (SQLException e) {
             //Mostramos el error en caso de no conectarse
             Toast.makeText(getActivity(),
-                    e.getMessage().toString(), Toast.LENGTH_SHORT).show();
+                    e.getMessage(), Toast.LENGTH_SHORT).show();
             return false;
         }
     }

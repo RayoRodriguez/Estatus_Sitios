@@ -34,7 +34,8 @@ public class AvailabilityFragment extends Fragment
 
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mapView = (MapView) view.findViewById(R.id.mapView);
+        getActivity().setTitle(R.string.titleAvailability);
+        mapView = view.findViewById(R.id.mapView);
         if (mapView != null){
             mapView.onCreate(null);
             mapView.onResume();

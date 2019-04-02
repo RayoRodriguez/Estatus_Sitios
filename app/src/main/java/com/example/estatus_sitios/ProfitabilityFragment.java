@@ -3,6 +3,7 @@ package com.example.estatus_sitios;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,7 +35,8 @@ public class ProfitabilityFragment extends Fragment
 
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mapView = (MapView) view.findViewById(R.id.mapView2);
+        getActivity().setTitle(R.string.titleProfitability);
+        mapView = view.findViewById(R.id.mapView2);
         if (mapView != null){
             mapView.onCreate(null);
             mapView.onResume();
