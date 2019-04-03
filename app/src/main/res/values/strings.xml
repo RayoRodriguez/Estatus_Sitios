@@ -4,4 +4,5 @@
     <string name="titleAvailability">Disponibilidad</string>
     <string name="titleProfitability">Rentabilidad</string>
     <string name="titleSearch">Buscar</string>
+    <string name="titleCancel">Cancelar</string>
 </resources>
