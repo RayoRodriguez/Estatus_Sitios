@@ -11,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -35,17 +37,19 @@ public class AvailabilityFragment extends Fragment
     private MapView mapView;
     private Marker marcador;
     private Button btn;
+    private Button imgSearch;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_availability, null);
-        btn = view.findViewById(R.id.button2);
-        btn.setOnClickListener(new View.OnClickListener() {
+        imgSearch= getActivity().findViewById(R.id.imgSearch);
+        imgSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DialogBox dialogBox = new DialogBox();
                 dialogBox.show(getFragmentManager(),"Dialogo");
+                dialogBox.spinerPais();
             }
         });
         return view;
