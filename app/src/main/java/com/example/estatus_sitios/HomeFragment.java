@@ -60,7 +60,7 @@ public class HomeFragment extends Fragment {
         txtConsutla.append(datos + "\n");
     }
 
-    public boolean isOnline() {
+    public boolean isOnline(){
         return true;
     }
 
